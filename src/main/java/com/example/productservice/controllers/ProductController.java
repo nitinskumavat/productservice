@@ -1,8 +1,8 @@
 package com.example.productservice.controllers;
 
 import com.example.productservice.dtos.GenericProductDto;
+import com.example.productservice.exceptions.NotFoundException;
 import com.example.productservice.services.ProductService;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,8 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public GenericProductDto getProductById(@PathVariable("id") long id) {
+
+    public GenericProductDto getProductById(@PathVariable("id") long id) throws NotFoundException {
         return productService.getProductById(id);
     }
 
@@ -36,7 +37,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GenericProductDto> deleteProductById(@PathVariable("id") Long id) {
+    public ResponseEntity<GenericProductDto> deleteProductById(@PathVariable("id") Long id) throws NotFoundException {
         return new ResponseEntity<>(
                 productService.deleteProduct(id),
                 HttpStatus.OK
@@ -44,7 +45,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public GenericProductDto updateProductById(@RequestBody GenericProductDto productDto,@PathVariable("id") Long id) {
-        return productService.updateProduct(id,productDto);
+    public GenericProductDto updateProductById(@RequestBody GenericProductDto productDto, @PathVariable("id") Long id) throws NotFoundException {
+        return productService.updateProduct(id, productDto);
     }
 }
