@@ -2,9 +2,11 @@ package com.example.productservice.services;
 
 import com.example.productservice.dtos.GenericProductDto;
 import com.example.productservice.exceptions.NotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class SelfProductServiceImpl implements  ProductService {
 
     @Override
