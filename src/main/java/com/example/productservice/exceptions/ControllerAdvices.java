@@ -6,12 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-//@ControllerAdvice
+@ControllerAdvice
 public class ControllerAdvices {
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ExceptionDto> notFoundExceptionHandler(NotFoundException e){
-        return new ResponseEntity<>(new ExceptionDto(e.getMessage(), HttpStatus.NOT_FOUND),HttpStatus.NOT_FOUND);
+    public ResponseEntity<ExceptionDto> notFoundExceptionHandler(NotFoundException e) {
+        return new ResponseEntity<>(new ExceptionDto(e.getMessage(), HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
     }
+
 
 }

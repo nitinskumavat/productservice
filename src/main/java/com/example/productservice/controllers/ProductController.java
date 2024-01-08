@@ -2,8 +2,9 @@ package com.example.productservice.controllers;
 
 import com.example.productservice.dtos.GenericProductDto;
 import com.example.productservice.exceptions.NotFoundException;
+import com.example.productservice.exceptions.ValidationException;
 import com.example.productservice.services.ProductService;
-import org.springframework.beans.factory.annotation.Qualifier;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import java.util.List;
 public class ProductController {
     private ProductService productService;
 
-    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
@@ -25,27 +26,25 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-
-    public GenericProductDto getProductById(@PathVariable("id") long id) throws NotFoundException {
+    public GenericProductDto getProductById(@PathVariable("id") String id) throws NotFoundException {
         return productService.getProductById(id);
     }
 
 
     @PostMapping
-    public GenericProductDto createProduct(@RequestBody GenericProductDto product) {
+    public GenericProductDto createProduct(@Valid @RequestBody GenericProductDto product) throws ValidationException {
         return productService.createProduct(product);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GenericProductDto> deleteProductById(@PathVariable("id") Long id) throws NotFoundException {
+    public ResponseEntity<GenericProductDto> deleteProductById(@PathVariable("id") String id) throws NotFoundException {
         return new ResponseEntity<>(
                 productService.deleteProduct(id),
-                HttpStatus.OK
-        );
+                HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public GenericProductDto updateProductById(@RequestBody GenericProductDto productDto, @PathVariable("id") Long id) throws NotFoundException {
+    public GenericProductDto updateProductById(@RequestBody GenericProductDto productDto, @PathVariable("id") String id) throws NotFoundException {
         return productService.updateProduct(id, productDto);
     }
 }
