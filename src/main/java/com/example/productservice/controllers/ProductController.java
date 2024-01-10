@@ -2,7 +2,6 @@ package com.example.productservice.controllers;
 
 import com.example.productservice.dtos.GenericProductDto;
 import com.example.productservice.exceptions.NotFoundException;
-import com.example.productservice.exceptions.ValidationException;
 import com.example.productservice.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -32,7 +31,7 @@ public class ProductController {
 
 
     @PostMapping
-    public GenericProductDto createProduct(@Valid @RequestBody GenericProductDto product) throws ValidationException {
+    public GenericProductDto createProduct(@Valid @RequestBody GenericProductDto product) {
         return productService.createProduct(product);
     }
 
